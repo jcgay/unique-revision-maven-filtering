@@ -15,7 +15,7 @@ class UniqueRevisionFilteringTest extends Specification {
     ModelWriter pomWriter = new DefaultModelWriter()
     Logger logger = Mock()
 
-    UniqueRevisionFiltering uniqueRevision =  new UniqueRevisionFiltering(pomReader, pomWriter, logger)
+    UniqueRevisionFiltering uniqueRevision = new UniqueRevisionFiltering(pomReader, pomWriter, logger)
 
     File pom = File.createTempFile('pom', '.xml')
 
@@ -34,7 +34,7 @@ class UniqueRevisionFilteringTest extends Specification {
         result == artifact
     }
 
-    def 'replace ${revision} with current artifact version'(){
+    def 'replace ${revision} with current artifact version'() {
         given:
         pom << """<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -61,7 +61,7 @@ class UniqueRevisionFilteringTest extends Specification {
         project.version == '1.0-SNAPSHOT'
     }
 
-    def 'replace ${revision} with current artifact version without parent pom'(){
+    def 'replace ${revision} with current artifact version without parent pom'() {
         given:
         pom << """<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -82,7 +82,7 @@ class UniqueRevisionFilteringTest extends Specification {
         project.version == '1.0-SNAPSHOT'
     }
 
-    def 'left version untouched when it is not set to ${revision}'(){
+    def 'left version untouched when it is not set to ${revision}'() {
         given:
         pom << """<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
