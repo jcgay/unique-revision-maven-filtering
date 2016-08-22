@@ -4,7 +4,7 @@ This Maven extension aims to replace `${revision}` version in POM when installin
 
 ## Installation
 
-Get latest [unique-revision-maven-filtering-1.0-SNAPSHOT.jar](https://oss.sonatype.org/content/repositories/snapshots/fr/jcgay/maven/extension/unique-revision-maven-filtering/1.0-SNAPSHOT/) and copy it in `%M2_HOME%/lib/ext` folder (where `%M2_HOME` targets your local Maven installation).
+Get [unique-revision-maven-filtering](https://dl.bintray.com/jcgay/maven/fr/jcgay/maven/extension/unique-revision-maven-filtering/1.0/unique-revision-maven-filtering-1.0.jar) and copy it in `%M2_HOME%/lib/ext` folder (where `%M2_HOME` targets your local Maven installation).
 
 *or*
 
@@ -16,7 +16,7 @@ Use the new [core extensions configuration mechanism](http://takari.io/2015/03/1
     <extension>
       <groupId>fr.jcgay.maven.extension</groupId>
       <artifactId>unique-revision-maven-filtering</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
     </extension>
 </extensions>
 ```
