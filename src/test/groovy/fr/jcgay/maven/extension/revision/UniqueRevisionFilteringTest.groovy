@@ -61,6 +61,33 @@ class UniqueRevisionFilteringTest extends Specification {
         project.version == '1.0-SNAPSHOT'
     }
 
+    def 'replace x.y.${revision} with current artifact version'() {
+        given:
+        pom << """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.jcgay.example.version</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.\${revision}</version>
+    </parent>
+
+    <artifactId>submodule-1</artifactId>
+    <version>1.0.\${revision}</version>
+</project>
+        """
+        def artifact = new SubArtifact(new DefaultArtifact('fr.jcgay.test', 'jar-id', 'jar', '1.0.0-SNAPSHOT'), null, 'pom', pom)
+
+        when:
+        def result = uniqueRevision.transformArtifact(artifact)
+
+        then:
+        def project = new XmlSlurper().parse(result.file)
+        project.parent.version == '1.0.0-SNAPSHOT'
+        project.version == '1.0.0-SNAPSHOT'
+    }
+
     def 'replace ${revision} with current artifact version without parent pom'() {
         given:
         pom << """<?xml version="1.0" encoding="UTF-8"?>
@@ -68,7 +95,7 @@ class UniqueRevisionFilteringTest extends Specification {
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>submodule-1</artifactId>
+    <artifactId>module-1</artifactId>
     <version>\${revision}</version>
 </project>
         """
@@ -80,6 +107,27 @@ class UniqueRevisionFilteringTest extends Specification {
         then:
         def project = new XmlSlurper().parse(result.file)
         project.version == '1.0-SNAPSHOT'
+    }
+
+    def 'replace x.y.${revision} with current artifact version without parent pom'() {
+        given:
+        pom << """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>module-1</artifactId>
+    <version>1.0.\${revision}</version>
+</project>
+        """
+        def artifact = new SubArtifact(new DefaultArtifact('fr.jcgay.test', 'jar-id', 'jar', '1.0.0-SNAPSHOT'), null, 'pom', pom)
+
+        when:
+        def result = uniqueRevision.transformArtifact(artifact)
+
+        then:
+        def project = new XmlSlurper().parse(result.file)
+        project.version == '1.0.0-SNAPSHOT'
     }
 
     def 'left version untouched when it is not set to ${revision}'() {

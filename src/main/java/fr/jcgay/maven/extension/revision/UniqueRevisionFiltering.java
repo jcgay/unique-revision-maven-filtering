@@ -88,7 +88,7 @@ class UniqueRevisionFiltering implements MetadataGenerator {
     }
 
     private static boolean isRevision(String version) {
-        return "${revision}".equals(version);
+        return version != null && version.contains("${revision}");
     }
 
     private static boolean isPom(Artifact artifact) {
