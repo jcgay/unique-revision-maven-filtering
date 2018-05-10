@@ -7,7 +7,7 @@ before_install:
 install:
   - mvn install -DskipTests=true -B -V -t etc/toolchains.xml
 script:
-  - mvn test -B -t etc/toolchains.xml
+  - mvn verify -B -t etc/toolchains.xml
 after_success:
   - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml -t etc/toolchains.xml"
   - mvn clean verify coveralls:report -Prun-coverage -t etc/toolchains.xml
