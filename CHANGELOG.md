@@ -1,3 +1,9 @@
+# 1.2
+***
+
+- Also filter ${revision} if it appears in dependencyManagement ([c4ace40](http://github.com/jcgay/unique-revision-maven-filtering/commit/c4ace40e834512647dfd928903c1b8e7ef98d80f)) by [@oliverlockwood](https://github.com/oliverlockwood)
+- Migrate to Java 8 ([f35cd43](http://github.com/jcgay/unique-revision-maven-filtering/commit/f35cd433c4cae17732a10cc3dafadcf7cb224780))
+
 # 1.1
 ***
 
