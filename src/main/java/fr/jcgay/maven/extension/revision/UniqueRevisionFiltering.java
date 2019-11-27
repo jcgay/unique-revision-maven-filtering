@@ -1,5 +1,6 @@
 package fr.jcgay.maven.extension.revision;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
 import org.apache.maven.model.io.ModelReader;
@@ -34,8 +35,10 @@ class UniqueRevisionFiltering implements MetadataGenerator {
     @Override
     public Artifact transformArtifact(Artifact artifact) {
         if (!isPom(artifact)) {
+            logger.debug("Not a POM artifact - skipping");
             return artifact;
         }
+        logger.info("Filtering ${revision} to ensure resolution in published POMs");
 
         Model pom = readPom(artifact);
         if (pom == null) {
@@ -44,17 +47,30 @@ class UniqueRevisionFiltering implements MetadataGenerator {
 
         boolean hasRevisionNumber = false;
         if (isRevision(pom.getVersion())) {
+            logger.debug("Filtering ${revision} in <version> field");
             hasRevisionNumber = true;
             pom.setVersion(artifact.getBaseVersion());
         }
 
         Parent parent = pom.getParent();
         if (parent != null && isRevision(parent.getVersion())) {
+            logger.debug("Filtering ${revision} in <parent><version> field");
             hasRevisionNumber = true;
             parent.setVersion(artifact.getBaseVersion());
         }
 
+        if (pom.getDependencyManagement() != null && pom.getDependencyManagement().getDependencies() != null) {
+            for (Dependency dependency : pom.getDependencyManagement().getDependencies()) {
+                if (isRevision(dependency.getVersion())) {
+                    logger.debug("Filtering ${revision} in dependencyManagement of " + dependency.getGroupId() + ":" + dependency.getArtifactId());
+                    dependency.setVersion(artifact.getBaseVersion());
+                    hasRevisionNumber = true;
+                }
+            }
+        }
+
         if (hasRevisionNumber) {
+            logger.info("Rewriting updated POM model");
             File filteredPom = writePom(pom, artifact.getFile().getParent());
             return artifact.setFile(filteredPom);
         }

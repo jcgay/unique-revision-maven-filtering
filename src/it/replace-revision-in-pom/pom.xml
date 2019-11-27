@@ -16,4 +16,14 @@
     ${revision} should be replaced by 1.0-SNAPSHOT
   </description>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>fr.jcgay.maven.extension.urmf</groupId>
+        <artifactId>replace-revision-in-pom-commons</artifactId>
+        <version>${revision}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 </project>
