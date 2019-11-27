@@ -10,7 +10,7 @@
 
     <groupId>fr.jcgay.maven.extension</groupId>
     <artifactId>unique-revision-maven-filtering</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -21,7 +21,7 @@
         <url>https://github.com/jcgay/unique-revision-maven-filtering</url>
         <connection>scm:git:git://github.com/jcgay/unique-revision-maven-filtering.git</connection>
         <developerConnection>scm:git:git@github.com:jcgay/unique-revision-maven-filtering.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.2</tag>
     </scm>
 
     <dependencies>
