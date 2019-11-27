@@ -5,12 +5,17 @@
     <parent>
         <groupId>fr.jcgay.maven</groupId>
         <artifactId>jcgay-build-configuration</artifactId>
-        <version>1.15</version>
+        <version>1.17</version>
     </parent>
 
     <groupId>fr.jcgay.maven.extension</groupId>
     <artifactId>unique-revision-maven-filtering</artifactId>
     <version>1.2-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
     <scm>
         <url>https://github.com/jcgay/unique-revision-maven-filtering</url>
@@ -57,26 +62,8 @@
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
             <plugin>
-                <artifactId>maven-toolchains-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>toolchain</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <toolchains>
-                        <jdk>
-                            <version>1.6</version>
-                        </jdk>
-                    </toolchains>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.6</version>
                 <executions>
                     <execution>
                         <goals>
@@ -109,5 +96,35 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>build-with-toolchains</id>
+            <activation>
+                <jdk>!1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-toolchains-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>toolchain</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <toolchains>
+                                <jdk>
+                                    <version>${maven.compiler.target}</version>
+                                </jdk>
+                            </toolchains>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

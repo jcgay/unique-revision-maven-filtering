@@ -70,7 +70,7 @@ class UniqueRevisionFiltering implements MetadataGenerator {
     private File writePom(Model pom, String path) {
         File target = new File(path + File.separator + "target" + File.separator + "pom.xml");
         try {
-            pomWriter.write(target, Collections.<String, Object>emptyMap(), pom);
+            pomWriter.write(target, Collections.emptyMap(), pom);
             return target;
         } catch (IOException e) {
             logger.warn("Cannot write filtered pom in " + target + ", original pom will be installed / deployed.", e);
@@ -80,7 +80,7 @@ class UniqueRevisionFiltering implements MetadataGenerator {
 
     private Model readPom(Artifact artifact) {
         try {
-            return pomReader.read(artifact.getFile(), Collections.<String, Object>emptyMap());
+            return pomReader.read(artifact.getFile(), Collections.emptyMap());
         } catch (IOException e) {
             logger.warn("Error while reading pom from " + artifact.getFile() + ", original pom will be installed / deployed.", e);
             return null;
