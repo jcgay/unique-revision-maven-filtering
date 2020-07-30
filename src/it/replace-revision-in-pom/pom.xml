@@ -26,4 +26,12 @@
     </dependencies>
   </dependencyManagement>
 
+  <dependencies>
+    <dependency>
+      <groupId>fr.jcgay.maven.extension.urmf</groupId>
+      <artifactId>replace-revision-in-pom-dependencies</artifactId>
+      <version>${revision}</version>
+    </dependency>
+  </dependencies>
+
 </project>

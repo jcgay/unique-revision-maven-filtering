@@ -83,6 +83,9 @@
                     <cloneClean>true</cloneClean>
                     <showVersion>true</showVersion>
                     <postBuildHookScript>verify</postBuildHookScript>
+                    <setupIncludes>
+                        <setupInclude>artifact-installer/pom.xml</setupInclude>
+                    </setupIncludes>
                 </configuration>
                 <executions>
                     <execution>

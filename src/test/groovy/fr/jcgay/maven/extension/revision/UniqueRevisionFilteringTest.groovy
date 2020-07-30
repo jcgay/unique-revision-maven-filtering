@@ -167,7 +167,7 @@ class UniqueRevisionFilteringTest extends Specification {
     <groupId>com.github.jcgay.example.version</groupId>
     <artifactId>dep-mgmt-test</artifactId>
     <version>\${revision}</version>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -188,5 +188,36 @@ class UniqueRevisionFilteringTest extends Specification {
         def project = new XmlSlurper().parse(result.file)
         project.version == '1.0-SNAPSHOT'
         project.dependencyManagement.dependencies[0].dependency.version == '1.0-SNAPSHOT'
+    }
+
+    def 'updates versions in dependencies that are set to ${revision}'() {
+        given:
+        pom << """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.jcgay.example.version</groupId>
+    <artifactId>dep-mgmt-test</artifactId>
+    <version>\${revision}</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.jcgay.example.version</groupId>
+            <artifactId>dep-mgmt-test-commons</artifactId>
+            <version>\${revision}</version>
+        </dependency>
+    </dependencies>
+</project>
+        """
+        def artifact = new SubArtifact(new DefaultArtifact('fr.jcgay.test', 'jar-id', 'jar', '1.0-SNAPSHOT'), null, 'pom', pom)
+
+        when:
+        def result = uniqueRevision.transformArtifact(artifact)
+
+        then:
+        def project = new XmlSlurper().parse(result.file)
+        project.version == '1.0-SNAPSHOT'
+        project.dependencies[0].dependency.version == '1.0-SNAPSHOT'
     }
 }

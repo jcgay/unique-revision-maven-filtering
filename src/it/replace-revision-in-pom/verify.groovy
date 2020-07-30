@@ -10,5 +10,6 @@ File pom = new File("$localRepositoryPath/fr/jcgay/maven/extension/urmf/replace-
 def project = new XmlSlurper().parse(pom)
 assert project.version == '1.0-SNAPSHOT'
 assert project.dependencyManagement.dependencies[0].dependency.version == '1.0-SNAPSHOT'
+assert project.dependencies[0].dependency.version == '1.0-SNAPSHOT'
 
 return true

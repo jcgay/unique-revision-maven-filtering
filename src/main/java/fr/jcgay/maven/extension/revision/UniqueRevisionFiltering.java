@@ -59,6 +59,16 @@ class UniqueRevisionFiltering implements MetadataGenerator {
             parent.setVersion(artifact.getBaseVersion());
         }
 
+        if (pom.getDependencies() != null) {
+            for (Dependency dependency : pom.getDependencies()) {
+                if (isRevision(dependency.getVersion())) {
+                    logger.debug("Filtering ${revision} in dependency " + dependency.getGroupId() + ":" + dependency.getArtifactId());
+                    dependency.setVersion(artifact.getBaseVersion());
+                    hasRevisionNumber = true;
+                }
+            }
+        }
+
         if (pom.getDependencyManagement() != null && pom.getDependencyManagement().getDependencies() != null) {
             for (Dependency dependency : pom.getDependencyManagement().getDependencies()) {
                 if (isRevision(dependency.getVersion())) {
