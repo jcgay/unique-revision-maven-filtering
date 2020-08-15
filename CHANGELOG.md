@@ -1,3 +1,8 @@
+# 1.3
+***
+
+- Rewrites ${revision} for dependencies ([e3e1433](http://github.com/jcgay/unique-revision-maven-filtering/commit/e3e14338c4345c38ad50c07661f938a5293bde32)) by [@Tijs-2](https://github.com/Tijs-2)
+
 # 1.2
 ***
 
